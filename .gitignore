@@ -1,0 +1,6 @@
+#Files
+*.t7
+*.sw*
+*.net
+.DS_Store
+*.*~
