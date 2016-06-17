@@ -102,7 +102,12 @@ end
 model:add(cudnn.SpatialConvolution(128, #classes, 1, 1))
 
 local gpu_list = {}
-for i = 1,cutorch.getDeviceCount() do gpu_list[i] = i end
+--for i = 1,cutorch.getDeviceCount() do gpu_list[i] = i end
+if opt.nGPU == 1 then
+   gpu_list[1] = opt.devid
+else
+   for i = 1, opt.nGPU do gpu_list[i] = i end
+end
 model = nn.DataParallelTable(1, true, true):add(model:cuda(), gpu_list)
 print(opt.nGPU .. " GPUs being used")
 
