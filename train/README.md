@@ -23,7 +23,7 @@ Currently the network can be trained on three datasets:
 ## Example command for training encoder:
 
 ```
-th run.lua --dataset cs --datapath /Cityscapes/dataset/path/ --model models/encoder.lua --save /save/trained/model/ --imHeight 256 --imWidth 512 --labelHeight 28 --labelWidth 60
+th run.lua --dataset cs --datapath /Cityscapes/dataset/path/ --model models/encoder.lua --save /save/trained/model/ --imHeight 256 --imWidth 512 --labelHeight 32 --labelWidth 64
 ```
 
 ## Example command for training decoder:
