@@ -7,8 +7,8 @@ Currently the network can be trained on three datasets:
 | Datasets | Input Resolution | Output Resolution^ | # of classes |
 |:--------:|:----------------:|:------------------:|:------------:|
 | [CamVid](http://mi.eng.cam.ac.uk/research/projects/VideoRec/CamVid/) | 480x360 | 60x45 | 11 |
-| [Cityscapes](https://www.cityscapes-dataset.com/) | 512x256 |  | 19 |
-| [SUN RGBD]() |  |  | 37 |
+| [Cityscapes](https://www.cityscapes-dataset.com/) | 512x256 | 64x32 | 19 |
+| [SUN RGBD](http://rgbd.cs.princeton.edu/) | 256x200 | 32x25 | 37 |
 ^ is the encoder output resolution; decoder output resolution is the same as that of the input image. Folder arrangement of the datasets compatible with our data-loader has been explained in detail [here](data/README.md).
 
 ## Files/folders and their usage:

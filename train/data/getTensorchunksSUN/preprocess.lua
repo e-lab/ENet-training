@@ -18,10 +18,10 @@ function lines_from(file)
 end
 
 -- creating files
-if not paths.dirp(paths.cwd()..'/imgs') and not paths.dirp(paths.cwd()..'/labels') then
+if not paths.dirp(paths.cwd()..'/Images') and not paths.dirp(paths.cwd()..'/Labels') then
    print('create imgs and labels folder')
-   paths.mkdir('imgs')
-   paths.mkdir('labels')
+   paths.mkdir('Images')
+   paths.mkdir('Labels')
 else
    error('imgs and labels folder alredy exist')
 end
@@ -79,9 +79,9 @@ for i = 1, max do
 
    -- save files
    print('saving '..tostring(i)..'th chunk imgs')
-   torch.save('imgs/tensorImgs'..tostring(i)..'.t7',conti:float())
+   torch.save('Images/tensorImgs'..tostring(i)..'.t7',conti:float())
    print('saving '..tostring(i)..'th chunk labels')
-   torch.save('labels/tensorLabels'..tostring(i)..'.t7',conti:float())
+   torch.save('Labels/tensorLabels'..tostring(i)..'.t7',conti:float())
    print('Done')
 
 end

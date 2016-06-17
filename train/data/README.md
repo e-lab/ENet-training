@@ -1,6 +1,9 @@
 # Dataset loader description
 
-Cityscapes dataset can be downloaded from [here](https://www.cityscapes-dataset.com/) and SUN RGBD can be found [here](http://rgbd.cs.princeton.edu/). In case of [CamVid](http://mi.eng.cam.ac.uk/research/projects/VideoRec/CamVid/), we use different structure which we downloaded from [here](https://github.com/alexgkendall/SegNet-Tutorial/tree/master/CamVid) and modified it. CamVid dataset compatible with our loader can be found [here](CamVid).
+Cityscapes dataset can be downloaded from their [website](https://www.cityscapes-dataset.com/).
+In case of [CamVid](http://mi.eng.cam.ac.uk/research/projects/VideoRec/CamVid/), we use different structure which can be downloaded using this [link](https://github.com/alexgkendall/SegNet-Tutorial/tree/master/CamVid) and modified it.
+To make it compatible with our loader, just replace `train.txt` and `test.txt` with the one provided [CamVid](https://github.com/e-lab/ENet-training/train/data/CamVid/) folder.
+How to download [SUN RGBD](http://rgbd.cs.princeton.edu/) dataset and prepare it for our data loader has been explained in details [here](getTensorchunksSUN/).
 
 ## Folder/file structure for each dataset:
 
@@ -29,8 +32,8 @@ Cityscapes dataset can be downloaded from [here](https://www.cityscapes-dataset.
 
     ```
     SUN/
-    ├──
-    ├──
-    ├──
-    └──
+    ├── Images
+    │   └── tensorImgsX.t7
+    └── Labels
+        └── tensorLabelsX.t7
     ```
