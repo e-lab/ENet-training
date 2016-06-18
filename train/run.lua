@@ -2,7 +2,7 @@
 -- Main script for training a model for semantic segmentation
 --
 -- Abhishek Chaurasia, Eugenio Culurciello
--- Sangpil Kim, Adam Paszke
+-- Adam Paszke
 ----------------------------------------------------------------------
 
 require 'pl'
