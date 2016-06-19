@@ -6,3 +6,8 @@ This work has been published in arXiv: [`ENet: A Deep Neural Network Architectur
 
 * [train](train) contains tools for training network using various architectures. It can be further used for visulaization of network's performance. This section is mainly for pixelwise segmentation and scene-parsing.
 * [visualize](visualize) can be used to view the performance of trained network on any video/image as an overlay. (Will be added soon)
+
+
+### License
+
+MIT
