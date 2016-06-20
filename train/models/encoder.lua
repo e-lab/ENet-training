@@ -14,7 +14,7 @@ torch.setdefaulttensortype('torch.FloatTensor')
 print '==> define parameters'
 
 local histClasses = opt.datahistClasses
-local classes = opt.dataclasses
+local classes = opt.dataClasses
 local conClasses = opt.dataconClasses
 
 ----------------------------------------------------------------------

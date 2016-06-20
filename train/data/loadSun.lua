@@ -250,7 +250,7 @@ function ft ()
     file:close()
 
     -- Exports
-    opt.dataclasses = classes
+    opt.dataClasses = classes
     opt.dataconClasses = conClasses
     opt.datahistClasses = histClasses
     if IDX < testIDX then

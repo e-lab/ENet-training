@@ -2,7 +2,7 @@
 -- Main script for training a model for semantic segmentation
 --
 -- Abhishek Chaurasia, Eugenio Culurciello
--- Adam Paszke
+-- Sangpil Kim, Adam Paszke
 ----------------------------------------------------------------------
 
 require 'pl'
@@ -74,8 +74,8 @@ if opt.dataset ~= 'su' then
    local train = require 'train'
    local test  = require 'test'
    while epoch < opt.maxepoch do
-      local trainConf, model, loss = train(data.trainData, opt.dataclasses, epoch)
-      test(data.testData, opt.dataclasses, epoch, trainConf, model, loss )
+      local trainConf, model, loss = train(data.trainData, opt.dataClasses, epoch)
+      test(data.testData, opt.dataClasses, epoch, trainConf, model, loss )
       trainConf = nil
       collectgarbage()
       epoch = epoch + 1
@@ -95,11 +95,11 @@ elseif opt.dataset == 'su' then
          print('Current epoch: '..tostring(epoch))
          if IDX < 5 then
             print '==> training!'
-            trainConf, model, loss = train(chunks.trainData, opt.dataclasses, epoch)
+            trainConf, model, loss = train(chunks.trainData, opt.dataClasses, epoch)
             collectgarbage()
          else
             print '==> evaluating'
-            test(chunks.testData, opt.dataclasses, epoch, trainConf, model, loss )
+            test(chunks.testData, opt.dataClasses, epoch, trainConf, model, loss )
             collectgarbage()
          end
       end

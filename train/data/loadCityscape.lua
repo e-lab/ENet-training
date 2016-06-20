@@ -314,7 +314,7 @@ file:write(table.concat(classes_td))
 file:close()
 
 -- Exports
-opt.dataclasses = classes
+opt.dataClasses = classes
 opt.dataconClasses  = conClasses
 opt.datahistClasses = histClasses
 
