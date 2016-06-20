@@ -61,7 +61,7 @@ x = x:cuda()
 yt = yt:cuda()
 
 local function train(trainData, classes, epoch)
-   if epoch % opt.lrDecayEvery == 0 then optimState.learningRate = optimState.learningRate * learningRateDecay end
+   if epoch % opt.lrDecayEvery == 0 then optimState.learningRate = optimState.learningRate * opt.learningRateDecay end
 
    -- local vars
    local time = sys.clock()
