@@ -18,6 +18,7 @@ function opts.parse(arg)
    -m,--momentum           (default 0.9)         momentum
    -b,--batchSize          (default 2)           batch size
    --maxepoch              (default 300)         maximum number of training epochs
+   --plot                                        plot training/testing error
    --lrDecayEvery          (default 100)         Decay learning rate every X epoch by 1e-1
 
    Device Related:

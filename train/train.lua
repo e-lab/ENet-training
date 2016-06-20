@@ -20,9 +20,6 @@ local loss = t.loss
 ----------------------------------------------------------------------
 print '==> defining some tools'
 
--- Log results to files
-local trainLogger = optim.Logger(paths.concat(opt.save, 'train.log'))
-
 ----------------------------------------------------------------------
 
 -- Retrieve parameters and gradients:
@@ -43,10 +40,10 @@ print '==> defining training procedure'
 
 local confusion
 if opt.dataconClasses then
-   print('confusion unlabel is not added')
+   print('Class \'Unlabeled\' is ignored in confusion matrix')
    confusion = optim.ConfusionMatrix(opt.dataconClasses)
 else
-   confusion = optim.ConfusionMatrix(opt.dataclasses)
+   confusion = optim.ConfusionMatrix(opt.dataClasses)
 end
 
 local optimState = {
@@ -64,7 +61,7 @@ x = x:cuda()
 yt = yt:cuda()
 
 local function train(trainData, classes, epoch)
-   if epoch % opt.lrDecayEvery == 0 then optimState.learningRate = optimState.learningRate * 1e-1 end
+   if epoch % opt.lrDecayEvery == 0 then optimState.learningRate = optimState.learningRate * learningRateDecay end
 
    -- local vars
    local time = sys.clock()
@@ -150,7 +147,7 @@ local function train(trainData, classes, epoch)
    totalerr = totalerr / (trainData:size()/opt.batchSize)
    print('Train Error: ', totalerr )
 
-   trainLogger:add{['Train error'] = totalerr}
+   trainError = totalerr
    collectgarbage()
    return confusion, model, loss
 end

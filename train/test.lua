@@ -14,18 +14,18 @@ torch.setdefaulttensortype('torch.FloatTensor')
 
 ----------------------------------------------------------------------
 -- Logger:
-testLogger = optim.Logger(paths.concat(opt.save, 'test.log'))
+errorLogger = optim.Logger(paths.concat(opt.save, 'error.log'))
 coTotalLogger = optim.Logger(paths.concat(opt.save, 'confusionTotal.log'))
 coAveraLogger = optim.Logger(paths.concat(opt.save, 'confusionAvera.log'))
 coUnionLogger = optim.Logger(paths.concat(opt.save, 'confusionUnion.log'))
 
 print '==> defining test procedure'
 local teconfusion, filename
+
 if opt.dataconClasses then
-   print('confusion unlabel is not added')
    teconfusion = optim.ConfusionMatrix(opt.dataconClasses)
 else
-   teconfusion = optim.ConfusionMatrix(opt.dataclasses)
+   teconfusion = optim.ConfusionMatrix(opt.dataClasses)
 end
 
 -- Batch test:
@@ -98,7 +98,13 @@ function test(testData, classes, epoch, trainConf, model, loss )
    -- save/log current net
    if IDX ~= 8 and opt.dataset == 'su' then doSave = false end
    if doSave then
-      testLogger:add{['Test error'] = totalerr }
+      errorLogger:add{['Training error'] = trainError,
+                      ['Testing error'] = totalerr}
+      if opt.plot then
+         errorLogger:style{['Training error'] = '-',
+                           ['Testing error'] = '-'}
+         errorLogger:plot()
+      end
       if totalerr < testData.preverror then
          filename = paths.concat(opt.save, 'model-best.net')
          print('==> saving model to '..filename)
