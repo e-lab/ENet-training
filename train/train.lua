@@ -125,7 +125,7 @@ local function train(trainData, classes, epoch)
       if opt.noConfusion == 'all' then
           model:evaluate()
           local y = model:forward(x):transpose(2, 4):transpose(2, 3)
-          y = y:reshape(y:numel()/y:size(4), #classes):sub(1, -1, 2, #opt.dataconClasses+1)
+          y = y:reshape(y:numel()/y:size(4), #classes):sub(1, -1, 2, #opt.dataClasses)
           local _, predictions = y:max(2)
           predictions = predictions:view(-1)
           local k = yt:view(-1)
