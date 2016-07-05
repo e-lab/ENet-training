@@ -166,19 +166,6 @@ else
       size = function() return tesize end
    }
 
-
-   -- Rearrange label mapping based on the updated class mapping
-   local function remapData(label)
-      for i = 1, nClasses do
-         if classMap[i] ~= i then
-            local mask = label:eq(i):float()
-            label = label + (mask * (classMap[i][1] - i))
-         end
-      end
-      return(label)
-   end
-
-
    print('==> loading training files');
 
    local dpathRoot = opt.datapath .. '/leftImg8bit/train/'

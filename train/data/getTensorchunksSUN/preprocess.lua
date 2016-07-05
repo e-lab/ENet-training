@@ -26,20 +26,19 @@ else
    error('imgs and labels folder alredy exist')
 end
 
-local height, width, conti, contl, ipath, lfile, ifile
+local ipath, lfile, ifile
 local chi , chl, inTemp, batch = 3 , 1, 0, 0
 local sum, cn, max = 0, 0, 8
 
 -- load indexTable and paths
-local indexTable = { {1860, 530, 730},
-               {2790, 427, 561},
-               {4478, 441, 591},
-               {5050, 531, 681},
-               {6974, 530, 730},
-               {8047, 427, 561},
-               {9748, 441, 591},
-               {10335,531, 681}
-               }
+local indexTable = {{1860, 530, 730},
+                    {2790, 427, 561},
+                    {4478, 441, 591},
+                    {5050, 531, 681},
+                    {6974, 530, 730},
+                    {8047, 427, 561},
+                    {9748, 441, 591},
+                    {10335,531, 681}}
 
 local paths = lines_from('sunImgPath.tsv')
 
@@ -47,14 +46,14 @@ for i = 1, max do
 
    -- get dim width height from index
    print(tostring(i)..'th chunk out of 8 chunks')
-   height = indexTable[i][2]
-   width  = indexTable[i][3]
+   local height = indexTable[i][2]
+   local width  = indexTable[i][3]
    sum = sum + batch
    batch  = indexTable[i][1] - sum
 
    --init container
-   conti = torch.LongTensor(batch,chi,height,width)
-   contl = torch.LongTensor(batch,chl,height,width)
+   local conti = torch.LongTensor(batch,chi,height,width)
+   local contl = torch.LongTensor(batch,chl,height,width)
 
    -- fill in container
    for j = sum + 1 , sum + batch do
@@ -81,8 +80,11 @@ for i = 1, max do
    print('saving '..tostring(i)..'th chunk imgs')
    torch.save('Images/tensorImgs'..tostring(i)..'.t7',conti:float())
    print('saving '..tostring(i)..'th chunk labels')
-   torch.save('Labels/tensorLabels'..tostring(i)..'.t7',conti:float())
+   torch.save('Labels/tensorLabels'..tostring(i)..'.t7',contl:float())
    print('Done')
 
+   conti = nil
+   contl = nil
+   collectgarbage()
 end
-
+collectgarbage()
