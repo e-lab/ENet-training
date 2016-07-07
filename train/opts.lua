@@ -16,10 +16,10 @@ function opts.parse(arg)
    -d,--learningRateDecay  (default 1e-7)        learning rate decay (in # samples)
    -w,--weightDecay        (default 5e-4)        L2 penalty on the weights
    -m,--momentum           (default 0.9)         momentum
-   -b,--batchSize          (default 2)           batch size
+   -b,--batchSize          (default 8)           batch size
    --maxepoch              (default 300)         maximum number of training epochs
    --plot                                        plot training/testing error
-   --lrDecayEvery          (default 100)         Decay learning rate every X epoch by 1e-1
+   --lrDecayEvery          (default 100)          Decay learning rate every X epoch by 1e-1
 
    Device Related:
    -t,--threads            (default 8)           number of threads
@@ -32,12 +32,11 @@ function opts.parse(arg)
    --datapath              (default /media/Dataset/)
                            dataset location
    --dataset               (default cv)          dataset type: cv(CamVid)/cs(cityscapes)/su(SUN)
-   --cachepath             (default /media/)
-                           cache directory to save the loaded dataset
-   --imHeight              (default 360)         image height  (360 cv/256 cs/200 su)
-   --imWidth               (default 480)         image width   (480 cv/512 cs/256 su)
-   --labelHeight           (default 45)          label height  (45  cv/32 cs/25 su)
-   --labelWidth            (default 60)          label width   (60  cv/64 cs/32 su)
+   --cachepath             (default /media/)     cache directory to save the loaded dataset
+   --imHeight              (default 360)         image height  (360 cv/256 cs/256 su)
+   --imWidth               (default 480)         image width   (480 cv/512 cs/328 su)
+   --labelHeight           (default 45)          label height  (45  cv/32 cs/32 su)
+   --labelWidth            (default 60)          label width   (60  cv/64 cs/41 su)
    --smallNet                                    reduce number of classes
 
    Model Related:

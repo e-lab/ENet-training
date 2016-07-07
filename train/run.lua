@@ -33,19 +33,7 @@ if opt.dataset == 'cv' then
 elseif opt.dataset == 'cs' then
    data = require 'data/loadCityscape'
 elseif opt.dataset == 'su' then
-    for i = 1 , 8 do
-        local cacheDir = paths.concat(opt.cachepath, 'sun')
-        local cachePath = paths.concat(cacheDir, tostring(i)..'data.t7')
-        local histPath = paths.concat(cacheDir, 'from_'..tostring(i)..'th_hist.txt')
-        if  opt.cachepath ~= "none" and paths.filep(cachePath) or paths.filep(histPath)then
-            IDX = i
-        end
-    end
-    IDX = 1
-    print('SUN loading data')
-    ft = require 'data/loadSun'
-    chunks = ft()
-    print(chunks)
+   data = require 'data/loadSUN'
 else
    error ("Dataset loader not found. (Available options are: cv/cs/su")
 end
@@ -62,49 +50,15 @@ torch.save(path.join(opt.save,'opt.t7'),opt)
 ----------------------------------------------------------------------
 print '==> training!'
 local epoch = 1
--- epoch tracker
-if string.len(opt.startfrom) > 1 then
-     local util = assert(require '/misc/util','no /misc/util')
-     epoch = util.setOpt()
-end
 
 t = paths.dofile(opt.model)
 
-if opt.dataset ~= 'su' then
-   local train = require 'train'
-   local test  = require 'test'
-   while epoch < opt.maxepoch do
-      local trainConf, model, loss = train(data.trainData, opt.dataClasses, epoch)
-      test(data.testData, opt.dataClasses, epoch, trainConf, model, loss )
-      trainConf = nil
-      collectgarbage()
-      epoch = epoch + 1
-   end
-elseif opt.dataset == 'su' then
-   local util , train, test, trainConf, model, loss, epoch, train, test
-   IDX = 1
-   epoch = 1
-   train = require 'train'
-   test  = require 'test'
-   while epoch < opt.maxepoch do
-      for i = 1,8 do
-         require 'xlua'
-         xlua.progress(i,8)
-         IDX = i
-         if i > 1 or epoch ~= 1 then chunks = nil chunks = ft() end
-         print('Current epoch: '..tostring(epoch))
-         if IDX < 5 then
-            print '==> training!'
-            trainConf, model, loss = train(chunks.trainData, opt.dataClasses, epoch)
-            collectgarbage()
-         else
-            print '==> evaluating'
-            test(chunks.testData, opt.dataClasses, epoch, trainConf, model, loss )
-            collectgarbage()
-         end
-      end
-      epoch = epoch + 1
-   end
-else
-    error('opt.dataset miss match')
+local train = require 'train'
+local test  = require 'test'
+while epoch < opt.maxepoch do
+   local trainConf, model, loss = train(data.trainData, opt.dataClasses, epoch)
+   test(data.testData, opt.dataClasses, epoch, trainConf, model, loss )
+   trainConf = nil
+   collectgarbage()
+   epoch = epoch + 1
 end

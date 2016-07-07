@@ -39,11 +39,9 @@ function test(testData, classes, epoch, trainConf, model, loss )
    ----------------------------------------------------------------------
    -- local vars
    local time = sys.clock()
-   local doSave = true
    -- total loss error
    local err = 0
    local totalerr = 0
-   if opt.dataset ~= 'su' then IDX = 8 end
 
    -- This matrix records the current confusion across classes
 
@@ -96,63 +94,29 @@ function test(testData, classes, epoch, trainConf, model, loss )
    totalerr = totalerr / (testData:size() / opt.batchSize)
    print('Test Error: ', totalerr )
    -- save/log current net
-   if IDX ~= 8 and opt.dataset == 'su' then doSave = false end
-   if doSave then
-      errorLogger:add{['Training error'] = trainError,
-                      ['Testing error'] = totalerr}
-      if opt.plot then
-         errorLogger:style{['Training error'] = '-',
-                           ['Testing error'] = '-'}
-         errorLogger:plot()
-      end
-      if totalerr < testData.preverror then
-         filename = paths.concat(opt.save, 'model-best.net')
-         print('==> saving model to '..filename)
-
-         torch.save(filename, model:clearState():get(1))
-         -- update to min error:
-         if opt.noConfusion == 'tes' or opt.noConfusion == 'all' then
-            coTotalLogger:add{['confusion total accuracy'] = teconfusion.totalValid * 100 }
-            coAveraLogger:add{['confusion average accuracy'] = teconfusion.averageValid * 100 }
-            coUnionLogger:add{['confusion union accuracy'] = teconfusion.averageValid * 100 }
-
-            filename = paths.concat(opt.save,'confusion-'..epoch..'.t7')
-            print('==> saving confusion to '..filename)
-            torch.save(filename,teconfusion)
-
-            filename = paths.concat(opt.save, 'confusionMatrix-best.txt')
-            print('==> saving confusion matrix to ' .. filename)
-            local file = io.open(filename, 'w')
-            file:write("--------------------------------------------------------------------------------\n")
-            file:write("Training:\n")
-            file:write("================================================================================\n")
-            file:write(tostring(trainConf))
-            file:write("\n--------------------------------------------------------------------------------\n")
-            file:write("Testing:\n")
-            file:write("================================================================================\n")
-            file:write(tostring(teconfusion))
-            file:write("\n--------------------------------------------------------------------------------")
-            file:close()
-         end
-         filename = paths.concat(opt.save, 'best-number.txt')
-         local file = io.open(filename, 'w')
-         file:write("----------------------------------------\n")
-         file:write("Best test error: ")
-         file:write(tostring(totalerr))
-         file:write(", in epoch: ")
-         file:write(tostring(epoch))
-         file:write("\n----------------------------------------\n")
-         file:close()
-         if totalerr < testData.preverror then testData.preverror = totalerr end
-      end
-      -- cudnn.convert(model, nn)
-      local filename = paths.concat(opt.save, 'model-'..epoch..'.net')
-      --os.execute('mkdir -p ' .. sys.dirname(filename))
+   errorLogger:add{['Training error'] = trainError,
+                   ['Testing error'] = totalerr}
+   if opt.plot then
+      errorLogger:style{['Training error'] = '-',
+      ['Testing error'] = '-'}
+      errorLogger:plot()
+   end
+   if totalerr < testData.preverror then
+      filename = paths.concat(opt.save, 'model-best.net')
       print('==> saving model to '..filename)
+
       torch.save(filename, model:clearState():get(1))
+      -- update to min error:
       if opt.noConfusion == 'tes' or opt.noConfusion == 'all' then
-         -- update to min error:
-         filename = paths.concat(opt.save, 'confusionMatrix-' .. epoch .. '.txt')
+         coTotalLogger:add{['confusion total accuracy'] = teconfusion.totalValid * 100 }
+         coAveraLogger:add{['confusion average accuracy'] = teconfusion.averageValid * 100 }
+         coUnionLogger:add{['confusion union accuracy'] = teconfusion.averageValid * 100 }
+
+         filename = paths.concat(opt.save,'confusion-'..epoch..'.t7')
+         print('==> saving confusion to '..filename)
+         torch.save(filename,teconfusion)
+
+         filename = paths.concat(opt.save, 'confusionMatrix-best.txt')
          print('==> saving confusion matrix to ' .. filename)
          local file = io.open(filename, 'w')
          file:write("--------------------------------------------------------------------------------\n")
@@ -165,24 +129,46 @@ function test(testData, classes, epoch, trainConf, model, loss )
          file:write(tostring(teconfusion))
          file:write("\n--------------------------------------------------------------------------------")
          file:close()
-         filename = paths.concat(opt.save, 'confusion-'..epoch..'.t7')
-         print('==> saving test confusion object to '..filename)
-         torch.save(filename,teconfusion)
-         --resetting confusionMatrix
-         if opt.dataset ~= 'su' then
-            trainConf:zero()
-            teconfusion:zero()
-         elseif opt.dataset == 'su' then
-            if IDX == 8 then
-               trainConf:zero()
-               teconfusion:zero()
-            end
-         else
-            error('wrong dataset option')
-         end
       end
+      filename = paths.concat(opt.save, 'best-number.txt')
+      local file = io.open(filename, 'w')
+      file:write("----------------------------------------\n")
+      file:write("Best test error: ")
+      file:write(tostring(totalerr))
+      file:write(", in epoch: ")
+      file:write(tostring(epoch))
+      file:write("\n----------------------------------------\n")
+      file:close()
       if totalerr < testData.preverror then testData.preverror = totalerr end
    end
+   -- cudnn.convert(model, nn)
+   local filename = paths.concat(opt.save, 'model-'..epoch..'.net')
+   --os.execute('mkdir -p ' .. sys.dirname(filename))
+   print('==> saving model to '..filename)
+   torch.save(filename, model:clearState():get(1))
+   if opt.noConfusion == 'tes' or opt.noConfusion == 'all' then
+      -- update to min error:
+      filename = paths.concat(opt.save, 'confusionMatrix-' .. epoch .. '.txt')
+      print('==> saving confusion matrix to ' .. filename)
+      local file = io.open(filename, 'w')
+      file:write("--------------------------------------------------------------------------------\n")
+      file:write("Training:\n")
+      file:write("================================================================================\n")
+      file:write(tostring(trainConf))
+      file:write("\n--------------------------------------------------------------------------------\n")
+      file:write("Testing:\n")
+      file:write("================================================================================\n")
+      file:write(tostring(teconfusion))
+      file:write("\n--------------------------------------------------------------------------------")
+      file:close()
+      filename = paths.concat(opt.save, 'confusion-'..epoch..'.t7')
+      print('==> saving test confusion object to '..filename)
+      torch.save(filename,teconfusion)
+      --resetting confusionMatrix
+      trainConf:zero()
+      teconfusion:zero()
+   end
+   if totalerr < testData.preverror then testData.preverror = totalerr end
 
    print('\n') -- separate epochs
 
