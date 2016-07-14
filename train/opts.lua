@@ -48,7 +48,6 @@ function opts.parse(arg)
    Saving/Displaying Information:
    --noConfusion           (default skip)
                            skip: skip confusion, all: test+train, tes : test only
-   --startfrom             (default .)           type dir/model-x.net
    --printNorm                                   For visualize norm factor while training
  ]]
 
