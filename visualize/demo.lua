@@ -2,6 +2,7 @@
 --------------------------------------------------------------------------------
 -- View demos based on the trained network output
 --
+-- e-Lab
 -- Written by: Abhishek Chaurasia
 -- Dated: 24th March, 2016
 --------------------------------------------------------------------------------
@@ -110,33 +111,6 @@ classes = network.classes
 
 colorMap:init(opt, classes)
 local colors = colorMap.getColors()
-
-local classSmall
-local colorsSmall
-if opt.limitClass then
-   classSmall = {'Sky', 'Road', 'Person', 'Vehicle', 'Misc'}
-   colorsSmall = {[1]={1.0, 1.0, 1.0},
-                  [2]={0.3, 0.3, 0.3},
-                  [3]={0.0, 0.0, 1.0},
-                  [4]={1.0, 0.0, 0.0},
-                  [5]={1.0, 1.0, 0.0}}
-                  --[6]={0.0, 1.0, 0.0}}
-   for i = 1, #classes do
-      if classes[i] == 'Sky' or classes[i] == 'Unlabeled' or classes[i] == 'RectificationBorder' then
-         colors[i] = colorsSmall[1]
-      elseif classes[i] == 'Road' or classes[i] == 'EgoVehicle' or classes[i] == 'Sidewalk' or classes[i] == 'Ground' or classes[i] == 'Parking' or classes[i] == 'RailTrack' then
-         colors[i] = colorsSmall[2]
-      elseif classes[i] == 'Person' or classes[i] == 'Rider' or classes[i] == 'Pedestrian' then
-         colors[i] = colorsSmall[3]
-      elseif classes[i] == 'Car' or classes[i] == 'Bus' or classes[i] == 'Bicycle' or classes[i] == 'Motorcycle' then
-         colors[i] = colorsSmall[4]
-      --[[elseif classes[i] == 'Building' or classes[i] == 'Fence' or classes[i] == 'Wall' then
-         colors[i] = colorsSmall[5]--]]
-      else
-         colors[i] = colorsSmall[5]
-      end
-   end
-end
 
 -- generating the <colourmap> out of the <colors> table
 local colormap = imgraph.colormap(colors)

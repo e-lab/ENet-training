@@ -22,7 +22,7 @@ function opts.parse(arg)
    --camRes       (default VGA)
                   Resolution of the camera: QHD/VGA/FWVGA/HD/FHD
    --dataset      (default cs)
-                  camvid/indoor/cityscape: cv/id/cs
+                  cityscapes/camvid/sun: cs/cv/su
 
    ## Model
    -d, --dmodel   (default /media/HDD1/Models/)
