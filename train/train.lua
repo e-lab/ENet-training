@@ -25,16 +25,10 @@ print '==> defining some tools'
 -- Retrieve parameters and gradients:
 -- this extracts and flattens all the trainable parameters of the mode
 -- into a 1-dim vector
-local model, w, dE_dw
-if string.len(opt.startfrom) < 2 then
-   model = t.model
-   print '==> flattening model parameters'
-   w,dE_dw = model:getParameters()
-else
-   model = torch.load(opt.startfrom)
-   print ('==> flattening model parameters from '..opt.startfrom)
-   w,dE_dw = model:getParameters()
-end
+local w, dE_dw
+local model = t.model
+print '==> flattening model parameters'
+w,dE_dw = model:getParameters()
 ----------------------------------------------------------------------
 print '==> defining training procedure'
 
