@@ -95,7 +95,7 @@ else
       -- load corresponding ground truth
       rawImg = image.load(gtPath[i], 1, 'byte'):squeeze():float() + 2
       local mask = rawImg:eq(13):float()
-      rawImg = rawImg - mask * 12
+      rawImg = rawImg - mask * #classes
 
       if (opt.labelHeight == rawImg:size(2)) and
          (opt.labelWidth == rawImg:size(3)) then
@@ -134,7 +134,7 @@ else
       -- load corresponding ground truth
       rawImg = image.load(gtPath[i], 1, 'byte'):squeeze():float() + 2
       local mask = rawImg:eq(13):float()
-      rawImg = rawImg - mask * 12
+      rawImg = rawImg - mask * #classes
 
       if (opt.labelHeight == rawImg:size(2)) and
          (opt.labelWidth == rawImg:size(3)) then
