@@ -112,7 +112,7 @@ classes = network.classes
 colorMap:init(opt, classes)
 local colors = colorMap.getColors()
 
--- generating the <colourmap> out of the <colors> table
+-- generating the <colormap> out of the <colors> table
 local colormap = imgraph.colormap(colors)
 -- Initialize class Frame which can be used to read videos/camera
 local frame
@@ -157,29 +157,15 @@ local qtimer = qt.QTimer()
 win:setfontsize(12)
 
 -- Show legends in the output window:
-local dy = 20
-if opt.limitClass then
-   dy = (opt.zoom * opt.ratio * source.h)/(#classSmall + 1)
-   for i = 1,#classSmall do
-      local y = (i-1)*dy
-      win:rectangle(source.w * opt.ratio * opt.zoom, y, 75, dy)
-      win:setcolor(colorsSmall[i][1],colorsSmall[i][2],colorsSmall[i][3])
-      win:fill()
-      win:setcolor('black')
-      win:moveto(source.w * opt.ratio * opt.zoom + 5, y+dy/2)
-      win:show(classSmall[i])
-   end
-else
-   dy = (opt.zoom * opt.ratio * source.h)/(#classes + 1)
-   for i = 1,#classes do
-      local y = (i-1)*dy
-      win:rectangle(source.w * opt.ratio * opt.zoom, y, 75, dy)
-      win:setcolor(colors[i][1],colors[i][2],colors[i][3])
-      win:fill()
-      win:setcolor('black')
-      win:moveto(source.w * opt.ratio * opt.zoom + 5, y+dy/2)
-      win:show(classes[i])
-   end
+local dy = (opt.zoom * opt.ratio * source.h)/(#classes + 1)
+for i = 1,#classes do
+   local y = (i-1)*dy
+   win:rectangle(source.w * opt.ratio * opt.zoom, y, 75, dy)
+   win:setcolor(colors[i][1],colors[i][2],colors[i][3])
+   win:fill()
+   win:setcolor('black')
+   win:moveto(source.w * opt.ratio * opt.zoom + 5, y+dy/2)
+   win:show(classes[i])
 end
 
 
@@ -210,13 +196,6 @@ local main = function()
 
       -- Processing the frame and forwarding it to network
       tp:reset()
-       -- normalize the input:
-       -- for i=1,img:size(1) do
-       --    for c = 1,3 do
-       --       img[i][c]:add(-network.stat.mean[c])
-       --       img[i][c]:div( network.stat.std [c])
-       --    end
-       -- end
 
       if img:dim() == 3 then
          img = img:view(1, img:size(1), img:size(2), img:size(3))
@@ -242,8 +221,6 @@ local main = function()
       distributions = network.model:forward(scaledImg):squeeze()
 
       processTime = tp:time().real
-
-      --distributions = distributions
 
       -- Assigning classes to each pixels
       tw:reset()
@@ -276,6 +253,7 @@ local main = function()
 
       -- add input image:
       colored:add(scaledImg[1]:float())
+
 
       colormapTime = tc:time().real
 
