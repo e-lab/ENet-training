@@ -159,45 +159,59 @@ end
 local function prepIndoorColors(classes)
    local colors = {}
 
-   -- Assign default colors to all the classes
-   for i = 1, #classes do
-      table.insert(colors, defaultColor)
+   local mapping = {
+      unlabeled      = colorPalette[bla],
+      ceiling        = colorPalette[red],
+      wall           = colorPalette[whi],
+      floor          = colorPalette[gre],
+
+      door           = colorPalette[blu],
+      window         = colorPalette[blu],
+
+      picture        = colorPalette[mag],
+      whiteboard     = colorPalette[mag],
+      bookshelf      = colorPalette[mag],
+      shelves        = colorPalette[mag],
+      books          = colorPalette[mag],
+
+      cabinet        = colorPalette[bro],
+      table          = colorPalette[bro],
+      dresser        = colorPalette[bro],
+      desk           = colorPalette[bro],
+      counter        = colorPalette[bro],
+
+      chair          = colorPalette[yel],
+      sofa           = colorPalette[yel],
+      bed            = colorPalette[yel],
+
+      blinds         = colorPalette[pur],
+      curtain        = colorPalette[pur],
+      shower_curtain = colorPalette[pur],
+      clothes        = colorPalette[pur],
+      pillow         = colorPalette[pur],
+
+      person         = colorPalette[cya],
+
+      floor_mat      = colorPalette[gra],
+      bag            = colorPalette[gra],
+      box            = colorPalette[gra],
+      fridge         = colorPalette[gra],
+      mirror         = colorPalette[gra],
+      tv             = colorPalette[gra],
+      paper          = colorPalette[gra],
+      night_stand    = colorPalette[gra],
+      lamp           = colorPalette[gra],
+
+      towel          = colorPalette[bla],
+      toilet         = colorPalette[bla],
+      sink           = colorPalette[bla],
+      bathtub        = colorPalette[bla],
+   }
+
+   for i,class in ipairs(classes) do
+      colors[i] = mapping[class] or defaultColor
    end
-   -- Colors => Classes
-   -- Assign specific color to respective classes
-   for i = 1, #classes do
-      if classes[i] == 'unlabel' then
-         colors[i] = colorPalette[pur]
-      elseif classes[i] == 'bed' then
-         colors[i] = colorPalette[kha]
-      elseif classes[i] == 'books' then
-         colors[i] = colorPalette[blu]
-      elseif classes[i] == 'ceiling' then
-         colors[i] = colorPalette[gre]
-      elseif classes[i] == 'ceiling' then
-         colors[i] = colorPalette[mag]
-      elseif classes[i] == 'chair' then
-         colors[i] = colorPalette[yel]
-      elseif classes[i] == 'floor' then
-         colors[i] = colorPalette[cya]
-      elseif classes[i] == 'furniture' then
-         colors[i] = colorPalette[gra]
-      elseif classes[i] == 'objects' then
-         colors[i] = colorPalette[lbl]
-      elseif classes[i] == 'picture' then
-         colors[i] = colorPalette[red]
-      elseif classes[i] == 'sofa' then
-         colors[i] = colorPalette[pin]
-      elseif classes[i] == 'table' then
-         colors[i] = colorPalette[bro]
-      elseif classes[i] == 'tv' then
-         colors[i] = colorPalette[neg]
-      elseif classes[i] == 'wall' then
-         colors[i] = colorPalette[whi]
-      elseif classes[i] == 'window' then
-         colors[i] = colorPalette[gol]
-      end
-   end
+
    colorMap.getColors = function()
       return colors
    end
