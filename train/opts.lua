@@ -12,9 +12,9 @@ function opts.parse(arg)
    local opt = lapp [[
    Command line options:
    Training Related:
-   -r,--learningRate       (default 1e-3)        learning rate
+   -r,--learningRate       (default 5e-4)        learning rate
    -d,--learningRateDecay  (default 1e-7)        learning rate decay (in # samples)
-   -w,--weightDecay        (default 5e-4)        L2 penalty on the weights
+   -w,--weightDecay        (default 2e-4)        L2 penalty on the weights
    -m,--momentum           (default 0.9)         momentum
    -b,--batchSize          (default 8)           batch size
    --maxepoch              (default 300)         maximum number of training epochs
