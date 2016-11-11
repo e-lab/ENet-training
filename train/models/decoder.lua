@@ -126,7 +126,7 @@ for i = 1, #classes do
       print("Class " .. tostring(i) .. " not found")
       classWeights[i] = 0
    else
-      classWeights[i] = 1 / (torch.log(1.04 + normHist[i]))
+      classWeights[i] = 1 / (torch.log(1.02 + normHist[i]))
    end
 end
 

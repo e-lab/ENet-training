@@ -16,7 +16,7 @@ function opts.parse(arg)
    -d,--learningRateDecay  (default 1e-7)        learning rate decay (in # samples)
    -w,--weightDecay        (default 2e-4)        L2 penalty on the weights
    -m,--momentum           (default 0.9)         momentum
-   -b,--batchSize          (default 8)           batch size
+   -b,--batchSize          (default 10)          batch size
    --maxepoch              (default 300)         maximum number of training epochs
    --plot                                        plot training/testing error
    --lrDecayEvery          (default 100)          Decay learning rate every X epoch by 1e-1
