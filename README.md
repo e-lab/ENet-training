@@ -9,7 +9,9 @@ This work has been published in arXiv: [`ENet: A Deep Neural Network Architectur
 
 ## Trained model
 
-Find a train model here: https://www.dropbox.com/sh/dywzk3gyb12hpe5/AAD5YkUa8XgMpHs2gCRgmCVCa
+Find a train model here:
+  + [Dropbox link](https://www.dropbox.com/sh/dywzk3gyb12hpe5/AAD5YkUa8XgMpHs2gCRgmCVCa)
+  + [Repository release](https://github.com/e-lab/ENet-training/releases/latest)
 
 ## Implementation in other frameworks:
 
