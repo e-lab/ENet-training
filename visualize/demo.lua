@@ -174,11 +174,13 @@ local timer = torch.Timer()      -- whole loop
 local totalTime
 local tg = torch.Timer()         -- grabbing a frame
 local grabTime
+local ts = torch.Timer()         -- grabbing a frame
+local scalingTime
 local tp = torch.Timer()         -- processing
 local processTime
-local tw = torch.Timer()
+local tw = torch.Timer()         -- find winning class
 local winnerTime
-local tc = torch.Timer()
+local tc = torch.Timer()         -- colormap
 local colormapTime
 local td = torch.Timer()         -- displaying
 local displayTime
@@ -194,8 +196,8 @@ local main = function()
 
       grabTime = tg:time().real
 
-      -- Processing the frame and forwarding it to network
-      tp:reset()
+      -- Scaling of image and moving from cpu to gpu
+      ts:reset()
 
       if img:dim() == 3 then
          img = img:view(1, img:size(1), img:size(2), img:size(3))
@@ -216,6 +218,11 @@ local main = function()
          scaledImgGPU:copy(scaledImg)
          scaledImg = scaledImgGPU
       end
+
+      scalingTime = ts:time().real
+
+      -- Processing the frame and forwarding it to network
+      tp:reset()
 
       -- compute network on frame:
       distributions = network.model:forward(scaledImg):squeeze()
@@ -284,6 +291,7 @@ local main = function()
 
       if opt.verbose then
          print('Read    : ' .. string.format('%.0f', (grabTime*1000)),
+               'Scale   : ' .. string.format('%.0f', (scalingTime*1000)),
                'Process : ' .. string.format('%.0f', (processTime*1000)),
                'Winner  : ' .. string.format('%.0f', (winnerTime*1000)),
                'Colormap: ' .. string.format('%.0f', (colormapTime*1000)),
